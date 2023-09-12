@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 
 class HttpService extends GetxService {
-  
+
+    //define this controller in static to
+  static HttpService get to => Get.find();
+
+  // define client
   final GetConnect client = GetConnect();
 
   Future<HttpService> init({
