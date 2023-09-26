@@ -9,7 +9,6 @@ class HttpService extends GetxService {
 
   Future<HttpService> init({
     required String baseUrl,
-    required Future<String> Function() getToken,
   }) async {
     // BASE URL
     client.baseUrl = baseUrl;
@@ -17,16 +16,17 @@ class HttpService extends GetxService {
     // the solution of handshake
     client.allowAutoSignedCert = true;
 
-    // assign token
-    client.httpClient.addRequestModifier((dynamic request) async {
-      final String token = await getToken();
-      request.headers['Authorization'] = token;
-      return request;
-    });
-
     //Authenticator will be called 3 times if HttpStatus is
     client.maxAuthRetries = 3;
     return this;
+  }
+
+  void setAuthorizationToken(String token) {
+    // assign token
+    client.httpClient.addRequestModifier((dynamic request) async {
+      request.headers['Authorization'] = token;
+      return request;
+    });
   }
 
   Future<dynamic> responseHandle(Function httpCallback) async {
