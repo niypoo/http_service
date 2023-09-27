@@ -21,7 +21,7 @@ class HttpService extends GetxService {
     return this;
   }
 
-  void setAuthorizationToken(String token) {
+  void setAuthorizationToken(String? token) {
     // assign token
     client.httpClient.addRequestModifier((dynamic request) async {
       request.headers['Authorization'] = token;
