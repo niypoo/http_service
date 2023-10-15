@@ -23,7 +23,7 @@ class HttpService extends GetxService {
     return this;
   }
 
-  void setHeader(String key, dynamic value) {
+  void setHeader(String key, String value) {
     // assign token
     client.httpClient.addRequestModifier((dynamic request) async {
       request.headers[key] = value;
