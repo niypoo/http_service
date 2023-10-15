@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:get/get.dart';
 
 class HttpService extends GetxService {
@@ -21,10 +23,10 @@ class HttpService extends GetxService {
     return this;
   }
 
-  void setAuthorizationToken(String? token) {
+  void setHeader(String key, dynamic value) {
     // assign token
     client.httpClient.addRequestModifier((dynamic request) async {
-      request.headers['Authorization'] = token;
+      request.headers[key] = value;
       return request;
     });
   }
@@ -44,7 +46,6 @@ class HttpService extends GetxService {
       }
     } catch (error) {
       print('[[HTTP RESPONSE]] statusText - ${error.toString()}');
-
       return Future.error(error.toString());
     }
   }
