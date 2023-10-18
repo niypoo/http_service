@@ -34,10 +34,7 @@ class HttpService extends GetxService {
   Future<dynamic> responseHandle(Function httpCallback) async {
     try {
       final Response response = await httpCallback();
-      print('[[HTTP RESPONSE]] hasError - ${response.hasError}');
-      print('[[HTTP RESPONSE]] statusCode - ${response.statusCode}');
-      print('[[HTTP RESPONSE]] statusText - ${response.statusText}');
-      print('[[HTTP RESPONSE]] body - ${response.body}');
+      print('[[HTTP BASE_URL]] -> ${client.baseUrl}  [[HTTP RESPONSE]] hasError - ${response.hasError}[[HTTP RESPONSE]] statusCode - ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return response.body;
