@@ -9,6 +9,10 @@ class HttpService extends GetxService {
   // define client
   final GetConnect client = GetConnect();
 
+  final bool production;
+
+  HttpService({this.production = false});
+
   Future<HttpService> init({
     required String baseUrl,
   }) async {
@@ -34,7 +38,10 @@ class HttpService extends GetxService {
   Future<dynamic> responseHandle(Function httpCallback) async {
     try {
       final Response response = await httpCallback();
-      print('[[HTTP BASE_URL]] -> ${client.baseUrl}  [[HTTP RESPONSE]] hasError - ${response.hasError}[[HTTP RESPONSE]] statusCode - ${response.statusCode}');
+
+      printDev(
+          '[[HTTP BASE_URL]] -> ${client.baseUrl}  [[HTTP RESPONSE]] hasError - ${response.hasError}[[HTTP RESPONSE]] statusCode - ${response.statusCode}');
+      printDev('[[HTTP body]] ->  ${response.body}');
 
       if (response.statusCode == 200) {
         return response.body;
@@ -42,8 +49,14 @@ class HttpService extends GetxService {
         return Future.error(response.body.toString());
       }
     } catch (error) {
-      print('[[HTTP RESPONSE]] statusText - ${error.toString()}');
+      printDev('[[HTTP RESPONSE]] statusText - ${error.toString()}');
       return Future.error(error.toString());
     }
+  }
+
+  // show error message only in dev-mode
+  void printDev(dynamic text) {
+    if (production == true) return;
+    print(text);
   }
 }
